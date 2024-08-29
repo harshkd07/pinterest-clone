@@ -28,10 +28,28 @@ export const createPin = TryCatch(async (req, res) => {
 });
 
 export const getAllPins = TryCatch(async (req, res) => {
-  const pins = await Pin.find().sort({ createdAt: -1 });
+  const { page = 1, per_page = 10 } = req.query;
 
-  res.json(pins);
+  const pageNumber = parseInt(page, 10);
+  const perPageNumber = parseInt(per_page, 10);
+
+  const skip = (pageNumber - 1) * perPageNumber;
+
+  const pins = await Pin.find()
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(perPageNumber);
+
+  const totalPins = await Pin.countDocuments();
+
+  res.json({
+    pins,
+    totalPages: Math.ceil(totalPins / perPageNumber),
+    currentPage: pageNumber,
+    totalPins
+  });
 });
+
 
 export const getSinglePin = TryCatch(async (req, res) => {
   const pin = await Pin.findById(req.params.id).populate("owner", "-password");

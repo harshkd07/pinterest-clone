@@ -7,7 +7,7 @@ export const LoadingAnimation = ()=>{
 export const Loading = ()=>{
     return(
         <div className="flex text-center items-center justify-center min-h-screen gap-2">
-            <div className="blink animate-spin  rounded-full h-14 w-14 border-t-4 border-red-500 "/><span> Ruk ja bsdk...</span>
+            <div className="blink animate-spin  rounded-full h-14 w-14 border-t-4 border-red-500 "/><span> Wait...</span>
         </div>
     )
 }

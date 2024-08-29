@@ -9,11 +9,11 @@ export const PinProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [pin, setPin] = useState([]);
 
-  
-  async function fetchPins() {
+  async function fetchPins(page = 1) {
+    setLoading(true);
     try {
-      const { data } = await axios.get("/api/pin/all");
-      console.log("data",data)
+      const { data } = await axios.get(`/api/pin/all?per_page=10&page=${page}`);
+      console.log("data", data);
       setPins(data);
       setLoading(false);
     } catch (error) {
